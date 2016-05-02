@@ -1,0 +1,15 @@
+{
+  "sensu": [
+    {
+      "name": "Hosting",
+      "host": "sensu",
+      "port": 4567
+    }
+  ],
+  "uchiwa": {
+    "host": "0.0.0.0",
+    "port": 3000,
+    "loglevel": "info",
+    "refresh": 10
+  }
+}
