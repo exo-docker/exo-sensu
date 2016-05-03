@@ -19,15 +19,11 @@ ENV DEBIAN_FRONTEND noninteractive
 # --force-confdef to let dpkg overwrite configuration files that you have not modified.
 ENV _APT_OPTIONS -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
 
-# Install needed repositories
-# RUN curl -L http://repositories.sensuapp.org/apt/pubkey.gpg | sudo apt-key add - && \
-#   echo "deb http://repositories.sensuapp.org/apt sensu main" | sudo tee /etc/apt/sources.list.d/sensu.list
-
 # Install the needed packages
 RUN apt-get -qq update && \
   apt-get -qq -y install ${_APT_OPTIONS} htop wget curl && \
-  curl -L http://repositories.sensuapp.org/apt/pubkey.gpg | sudo apt-key add - && \
-  echo "deb http://repositories.sensuapp.org/apt sensu main" | sudo tee /etc/apt/sources.list.d/sensu.list && \
+  curl -L http://repositories.sensuapp.org/apt/pubkey.gpg | apt-key add - && \
+  echo "deb http://repositories.sensuapp.org/apt sensu main" | tee /etc/apt/sources.list.d/sensu.list && \
   apt-get -qq update && \
   # apt-get -qq -y upgrade ${_APT_OPTIONS} && \
   apt-get -qq -y install ${_APT_OPTIONS} sensu && \
@@ -38,7 +34,7 @@ RUN apt-get -qq update && \
 # RUN mkdir /etc/sensu/
 # RUN mkdir mkdir /etc/sensu/conf.d/
 
-ADD sensu.sh  /sensu.sh
+COPY sensu.sh  /sensu.sh
 RUN chmod +x  /sensu.sh
 
 # Configure sensu
