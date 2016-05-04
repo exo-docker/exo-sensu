@@ -1,0 +1,11 @@
+{
+  "checks": {
+    "cpu": {
+      "command": "check-cpu.rb -w 80 -c 95",
+      "subscribers": [
+        "default"
+      ],
+      "interval": 60
+    }
+  }
+}

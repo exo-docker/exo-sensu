@@ -31,15 +31,23 @@ RUN apt-get -qq update && \
   apt-get -qq -y clean && \
   rm -rf /var/lib/apt/lists/*
 
-# RUN mkdir /etc/sensu/
-# RUN mkdir mkdir /etc/sensu/conf.d/
+# Install needed plugins
+RUN sensu-install -p sensu-plugins-cpu-checks:0.0.4
+RUN sensu-install -p sensu-plugins-process-checks:0.0.6
+RUN sensu-install -p sensu-plugins-network-checks:0.2.4
+RUN sensu-install -p sensu-plugins-redis:0.1.0
+# RUN sensu-install -p sensu-plugins-docker:0.0.4
 
-COPY sensu.sh  /sensu.sh
-RUN chmod +x  /sensu.sh
+
+COPY sensu.sh  /bin/sensu.sh
+RUN chmod +x  /bin/sensu.sh
 
 # Configure sensu
 COPY conf/redis.json /etc/sensu/conf.d/redis.json
 COPY conf/transport.json /etc/sensu/conf.d/transport.json
 COPY conf/api.json /etc/sensu/conf.d/api.json
+COPY conf/client.json /etc/sensu/conf.d/client.json
+# COPY conf/check-cpu.json /etc/sensu/conf.d/check-cpu.json
+# COPY conf/check-docker.json /etc/sensu/conf.d/check-cpu.json
 
-CMD ["/sensu.sh"]
+ENTRYPOINT ["/bin/sensu.sh"]

@@ -1,0 +1,12 @@
+{
+  "checks": {
+    "redis-ping": {
+      "command": "check-redis-ping.rb -h redis",
+      "subscribers": [
+        "redis",
+        "sensu"
+      ],
+      "interval": 60
+    }
+  }
+}

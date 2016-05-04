@@ -1,0 +1,12 @@
+{
+  "checks": {
+    "redis-memory-percentage": {
+      "command": "check-redis-memory-percentage.rb -h redis -w 50 -c 70 --crit-conn-failure",
+      "subscribers": [
+        "redis",
+        "sensu"
+      ],
+      "interval": 60
+    }
+  }
+}
